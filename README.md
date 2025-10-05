@@ -365,7 +365,7 @@ Contributions are welcome! Please:
 
 **Eduardo Gutiérrez**
 
-- 📧 Email: your-email@example.com
+- 📧 Email: eduardo3gtz@gmail.com.com
 - 🐙 GitHub: [eduardo3gtz](https://github.com/Eduardo3gtz)
 
 
