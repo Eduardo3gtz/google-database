@@ -2,33 +2,53 @@ package org.example.scholarapi;
 
 import org.example.scholarapi.controller.ScholarController;
 import org.example.scholarapi.model.Researcher;
+import org.example.scholarapi.persistence.DatabaseController;
 import org.example.scholarapi.view.ScholarView;
 
 /**
  * Main class to run the application.
- * It integrates the Model, View, and Controller to perform a search and display the results.
+ * Integrates the full workflow: API call -> Data Processing -> Database Storage.
  */
 public class Main {
 
+    /**
+     * The main entry point for the application. It orchestrates the entire process.
+     * @param args Command line arguments (not used in this project).
+     */
     public static void main(String[] args) {
-        // 1. Create instances of our MVC components
-        ScholarController controller = new ScholarController();
+        // 1. Create instances of all our components.
+        ScholarController apiController = new ScholarController();
+        DatabaseController dbController = new DatabaseController();
         ScholarView view = new ScholarView();
 
-        // 2. Define the ID of the author we want to search for (e.g., Geoffrey Hinton, AI pioneer)
-        String authorIdToSearch = "Geoffrey Hinton";
-        System.out.println("Searching for author with ID: " + authorIdToSearch);
+        // 2. Define the author to search for.
+        String authorToSearch = "Geoffrey Hinton";
+        System.out.println("Searching for author: " + authorToSearch);
 
         try {
-            // 3. Use the Controller to get the author's data
-            Researcher researcher = controller.getAuthorData(authorIdToSearch);
+            // --- PROCESS START ---
 
-            // 4. Use the View to display the retrieved data
+            // 3. Use the Controller to fetch the data from the API.
+            Researcher researcher = apiController.getAuthorData(authorToSearch);
+
+            // 4. Use the View to display the retrieved data on the console.
             view.displayResearcher(researcher);
 
+            // 5. Connect to the database.
+            dbController.connect();
+
+            // 6. Insert the articles into the database, after a null check.
+            if (researcher != null && researcher.getArticles() != null) {
+                dbController.insertArticles(researcher.getArticles());
+            }
+
         } catch (Exception e) {
-            // 5. If anything goes wrong, use the View to display the error
-            view.displayError("An error occurred: " + e.getMessage());
+            // 7. If any exception occurs during the process, use the View to display the error.
+            view.displayError("An error occurred during the process: " + e.getMessage());
+        } finally {
+            // 8. CRUCIAL: No matter what happens (success or error),
+            // always ensure the database connection is closed to prevent resource leaks.
+            dbController.disconnect();
         }
     }
 }

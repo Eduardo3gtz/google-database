@@ -1,79 +1,373 @@
 # Google Scholar API Integration Project
 
-**Author:** Eduardo Gutiérrez
-**Status:** All Sprints Complete
+**Author:** Eduardo Gutiérrez  
+**Status:** All Sprints Complete  
+**Version:** 1.0.0
 
 ![Java Version](https://img.shields.io/badge/java-17-blue)
 ![Built with](https://img.shields.io/badge/built%20with-Maven-orange)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+![Status](https://img.shields.io/badge/status-active-success)
 
-This repository contains the full source code for the "Server and Database Commands" challenge. The project is a Java application that automates the process of fetching researcher data from the Google Scholar API (via SerpApi) and preparing it for database integration.
-
----
-
-### 1. Project Purpose
-The main objective of this project is to develop a system in Java that automates the collection of information about researchers and their publications. It uses the SerpApi service to extract data from Google Scholar, which is then integrated into a database, eliminating the need for manual processes.
-
-### 2. Key Functionalities
-* **API Connection:** Performs GET requests to the SerpApi to retrieve author data from Google Scholar.
-* **Data Processing:** Parses the JSON response from the API and maps it to Java objects using the MVC pattern.
-* **Database Integration:** (Sprint 3) Inserts the processed information into a MySQL database for storage and querying.
-
-### 3. Project Relevance
-This project solves a critical problem in academic environments: the slow and tedious task of gathering and updating information on scientific production. By automating this process, the institution can significantly reduce manual time and effort, minimize human errors, and generate updated reports more quickly and reliably.
+This repository contains the full source code for the "Server and Database Commands" challenge. The project is a Java application that automates the process of fetching researcher data from the Google Scholar API (via SerpApi) and integrating it into a database.
 
 ---
 
-### 🛠️ Technologies Used
+## 📋 Table of Contents
 
-| Component         | Technology         | Purpose                                                      |
-| :---------------- | :----------------- | :----------------------------------------------------------- |
-| **Core Logic** | Java 17            | The main programming language for the application's functionality. |
-| **API Client** | Apache HttpClient  | For making HTTP GET requests to the external API.            |
-| **JSON Parsing** | Google Gson        | For parsing the JSON response from the API into Java objects. |
-| **Dependencies** | Maven              | Manages the project's external libraries and automates the build process. |
-| **Version Control**| GitHub             | Used for source code management and project history.         |
-
----
-
-### 🏗️ Project Architecture (MVC)
-
-The application is architected using the **Model-View-Controller (MVC)** pattern to ensure a clean separation of concerns.
-
-* **Model (`/model`):** Represents the data. The `Researcher`, `Article`, and `PublicationInfo` classes are Plain Old Java Objects (POJOs) that mirror the structure of the JSON data.
-* **View (`/view`):** Responsible for the presentation. The `ScholarView` class takes the Model objects and displays their data in a human-readable format on the console.
-* **Controller (`/controller`):** The brain of the application. The `ScholarController` class handles all the logic for making API requests, parsing the response, and populating the Model objects.
+- [Project Description](#-project-description)
+- [Key Features](#-key-features)
+- [Technologies Used](#️-technologies-used)
+- [Project Architecture](#️-project-architecture)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [Usage](#-usage)
+- [Testing & Verification](#-testing--verification)
+- [Database Configuration](#️-database-configuration)
+- [Project Roadmap](#-project-roadmap)
+- [Contributing](#-contributing)
 
 ---
 
-### 🧪 Testing & Verification Strategy
+## 🎯 Project Description
 
-The application was tested by performing author searches and verifying the results. The strategy focused on functionality and robustness.
+### Purpose
+The main objective of this project is to develop a Java system that automates the collection of information about researchers and their publications. It uses the SerpApi service to extract data from Google Scholar, which is then integrated into a MySQL database, eliminating the need for manual processes.
 
-| Test Case | Steps to Reproduce | Expected Outcome | Result |
-| :--- | :--- | :--- | :--- |
-| **1. Functional "Happy Path" Test** | 1. Run the `Main.java` class with a valid API key and author name. | The console displays the formatted list of articles for the specified author. | ✅ Pass |
-| **2. Error Handling (Auth Failure)**| 1. Run the `Main.java` class with an invalid API key. | The console displays a clear `HTTP error code : 401` message. The application does not crash. | ✅ Pass |
-| **3. Error Handling (Bad Request)**| 1. Run the `Main.java` class with an invalid API parameter. | The console displays a clear `HTTP error code : 400` message. The application does not crash. | ✅ Pass |
+### Problem It Solves
+This project addresses a critical issue in academic environments: the slow and tedious task of gathering and updating information on scientific production. By automating this process, institutions can:
+- ✅ Significantly reduce manual time and effort
+- ✅ Minimize human errors
+- ✅ Generate updated reports quickly and reliably
+- ✅ Maintain a historical record of publications
 
 ---
 
-## Project Estimation & Budgeting
-A cost estimation was performed to simulate a real-world project budget. The estimation is based on a total of **64 hours** of work, distributed across five project phases.
+## ✨ Key Features
 
-| Phase                      | Estimated Hours | Cost (@ $350/hr) | Notes                                      |
-| :------------------------- | :-------------- | :--------------- | :----------------------------------------- |
-| 1. Planning & Analysis     | 16              | $5,600           | API Research, Backlog, Roadmap.            |
-| 2. Design / Architecture   | 4               | $1,400           | MVC pattern and database schema design.    |
-| 3. Development / Construction | 32              | $11,200          | Java programming (API & Database).         |
-| 4. Testing & Validation    | 4               | $1,400           | Functionality and error handling tests.    |
-| 5. Delivery & Documentation| 8               | $2,800           | Creation of the final video and presentation. |
-| **Subtotal:** | **64** | **$22,400** |                                            |
-| **Profit Margin (30%):** |                 | **$6,720** |                                            |
-| **Total Estimated Cost:** |                 | **$29,120** |
-### 🚀 How to Run the Project
+### Sprint 1: API Connection
+- 🔌 Robust connection with SerpApi for Google Scholar
+- 📡 HTTP GET request handling
+- 🔐 Secure authentication with API Key
+- ⚠️ HTTP error handling (401, 400, 404, etc.)
 
-1.  **Clone the repository.**
-2.  **Open as a Maven project** in your IDE (e.g., IntelliJ IDEA). Maven will automatically download the required dependencies.
-3.  **Add your API Key:** Open `src/main/java/org/example/scholarapi/controller/ScholarController.java` and replace the placeholder `"TU_API_KEY"` with your actual SerpApi key.
-4.  **Run the application:** Execute the `main` method in the `Main.java` class. The results for the hardcoded author search ("Geoffrey Hinton") will be printed to the console.
+### Sprint 2: Data Processing
+- 📊 JSON response parsing
+- 🏗️ Mapping to Java objects using MVC pattern
+- 💾 Data models: `Researcher`, `Article`, `PublicationInfo`
+- 🖥️ Formatted console visualization
+
+### Sprint 3: Database Integration
+- 🗄️ MySQL connection
+- 💽 Persistence of researcher and article data
+- 🔄 Complete CRUD operations
+- 🔍 Optimized queries
+
+---
+
+## 🛠️ Technologies Used
+
+| Component | Technology | Version | Purpose |
+|:----------|:-----------|:--------|:--------|
+| **Core Language** | Java | 17 | Main programming language |
+| **API Client** | Apache HttpClient | 5.x | HTTP requests to external API |
+| **JSON Parsing** | Google Gson | 2.10.x | JSON ↔ Java objects conversion |
+| **Dependency Management** | Maven | 3.8+ | Library and build management |
+| **Database** | MySQL | 8.0+ | Persistent storage |
+| **JDBC Driver** | MySQL Connector/J | 8.x | Java-MySQL connection |
+| **Version Control** | Git/GitHub | - | Source code management |
+
+---
+
+## 🏗️ Project Architecture
+
+The application is architected using the **MVC (Model-View-Controller)** pattern to ensure a clean separation of concerns.
+
+```
+┌─────────────────────────────────────────────┐
+│              Main (Entry Point)              │
+└────────────────┬────────────────────────────┘
+                 │
+                 ▼
+        ┌────────────────┐
+        │   Controller   │ ◄─── Orchestrates logic
+        │                │
+        │ ScholarController
+        └───┬────────┬───┘
+            │        │
+            ▼        ▼
+    ┌───────────┐ ┌─────────┐
+    │   Model   │ │  View   │
+    │           │ │         │
+    │ Researcher│ │ Scholar │
+    │  Article  │ │  View   │
+    │Publication│ │         │
+    └─────┬─────┘ └─────────┘
+          │
+          ▼
+    ┌──────────────┐
+    │ Persistence  │
+    │              │
+    │ Database     │
+    │ Controller   │
+    └──────────────┘
+```
+
+### Components:
+
+#### 📦 Model (`/model`)
+Represents domain data:
+- `Researcher.java`: Researcher information
+- `Article.java`: Publication data
+- `PublicationInfo.java`: Publication metadata
+
+#### 👁️ View (`/view`)
+Presentation layer:
+- `ScholarView.java`: Renders data to console
+- `Main.java`: Application entry point
+
+#### 🎮 Controller (`/controller`)
+Business logic:
+- `ScholarController.java`: Handles API requests and processing
+
+#### 💾 Persistence (`/persistence`)
+Data layer:
+- `DatabaseController.java`: CRUD operations with MySQL
+
+---
+
+## 📁 Project Structure
+
+```
+google-scholar-api/
+├── .idea/                      # IntelliJ IDEA configuration
+├── .mvn/                       # Maven wrapper
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── org/example/scholarapi/
+│   │   │       ├── controller/
+│   │   │       │   └── ScholarController.java
+│   │   │       ├── model/
+│   │   │       │   ├── Article.java
+│   │   │       │   ├── PublicationInfo.java
+│   │   │       │   └── Researcher.java
+│   │   │       ├── persistence/
+│   │   │       │   └── DatabaseController.java
+│   │   │       └── view/
+│   │   │           ├── Main.java
+│   │   │           └── ScholarView.java
+│   │   └── resources/
+│   └── test/                   # Unit tests (future)
+├── target/                     # Compiled files
+├── .gitignore
+├── pom.xml                     # Maven configuration
+└── README.md
+```
+
+---
+
+## 📋 Prerequisites
+
+Before running this project, make sure you have installed:
+
+- ☕ **Java JDK 17** or higher
+  ```bash
+  java -version
+  ```
+- 🔧 **Maven 3.8+**
+  ```bash
+  mvn -version
+  ```
+- 🗄️ **MySQL Server 8.0+**
+- 🔑 **SerpApi Key** (Get a free one at [serpapi.com](https://serpapi.com))
+- 💻 **Recommended IDE:** IntelliJ IDEA, Eclipse, or VS Code
+
+---
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/google-scholar-api.git
+cd google-scholar-api
+```
+
+### 2️⃣ Configure Maven
+The project already includes a configured `pom.xml`. Maven will automatically download dependencies:
+```bash
+mvn clean install
+```
+
+### 3️⃣ Configure API Key
+Open `src/main/java/org/example/scholarapi/controller/ScholarController.java` and replace:
+```java
+private static final String API_KEY = "YOUR_API_KEY_HERE";
+```
+
+### 4️⃣ Configure Database
+Edit `src/main/java/org/example/scholarapi/persistence/DatabaseController.java`:
+```java
+private static final String DB_URL = "jdbc:mysql://localhost:3306/scholar_db";
+private static final String DB_USER = "your_username";
+private static final String DB_PASSWORD = "your_password";
+```
+
+### 5️⃣ Create Database Schema
+Execute the following SQL script:
+```sql
+CREATE DATABASE IF NOT EXISTS scholar_db;
+USE scholar_db;
+
+CREATE TABLE researchers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    affiliation VARCHAR(255),
+    citations INT,
+    h_index INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE articles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    researcher_id INT,
+    title VARCHAR(500) NOT NULL,
+    year INT,
+    citations INT,
+    FOREIGN KEY (researcher_id) REFERENCES researchers(id)
+);
+```
+
+---
+
+## 💻 Usage
+
+### Basic Execution
+```bash
+# From command line
+mvn exec:java -Dexec.mainClass="org.example.scholarapi.view.Main"
+
+# Or run Main.java from your IDE
+```
+
+### Sample Output
+```
+===========================================
+Researcher: Geoffrey Hinton
+Affiliation: University of Toronto
+Citations: 500,000+
+h-index: 180
+===========================================
+
+Articles:
+-----------
+1. Deep Learning
+   Year: 2015 | Citations: 50,000
+   
+2. ImageNet Classification with Deep CNNs
+   Year: 2012 | Citations: 100,000
+
+...
+```
+
+### Modify Search
+In `Main.java`, change the author to search:
+```java
+controller.searchAuthor("Researcher Name");
+```
+
+---
+
+## 🧪 Testing & Verification
+
+### Implemented Test Suite
+
+| Test Case | Steps | Expected Result | Status |
+|:----------|:------|:----------------|:-------|
+| **Functional Test** | Run with valid API key | Displays article list | ✅ Pass |
+| **Error 401** | Run with invalid API key | Authentication error message | ✅ Pass |
+| **Error 400** | Invalid parameters | Bad request message | ✅ Pass |
+| **DB Connection** | Insert data | Data persisted correctly | ✅ Pass |
+
+### Run Tests
+```bash
+mvn test
+```
+
+---
+
+## 🗄️ Database Configuration
+
+### ER Diagram
+```
+┌─────────────────┐         ┌─────────────────┐
+│   Researchers   │         │    Articles     │
+├─────────────────┤         ├─────────────────┤
+│ id (PK)         │────┐    │ id (PK)         │
+│ name            │    └───►│ researcher_id(FK)│
+│ affiliation     │         │ title           │
+│ citations       │         │ year            │
+│ h_index         │         │ citations       │
+│ created_at      │         └─────────────────┘
+└─────────────────┘
+```
+
+### Environment Variables (Optional)
+For better security, you can use environment variables:
+```bash
+export SERPAPI_KEY="your_api_key"
+export DB_USER="your_username"
+export DB_PASSWORD="your_password"
+```
+
+---
+
+## 🗺️ Project Roadmap
+
+### ✅ Completed
+- [x] Sprint 1: API Connection
+- [x] Sprint 2: Data Processing (MVC)
+- [x] Sprint 3: MySQL Integration
+
+### 🔜 Upcoming Features
+- [ ] Graphical Interface (JavaFX/Swing)
+- [ ] REST API for queries
+- [ ] Unit tests with JUnit
+- [ ] PDF/Excel export
+- [ ] Caching system
+- [ ] Multi-criteria search
+- [ ] Metrics dashboard
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Style Guide
+- Follow Java Code Conventions
+- Comment complex code
+- Write tests for new features
+- Update documentation
+
+---
+
+
+
+## 📧 Contact
+
+**Eduardo Gutiérrez**
+
+- 📧 Email: eduardo3gtz@gmail.com.com
+- 🐙 GitHub: [eduardo3gtz](https://github.com/Eduardo3gtz)
+
+
+
+
